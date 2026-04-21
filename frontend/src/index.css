@@ -1,0 +1,112 @@
+@import "tailwindcss";
+
+@theme {
+  --color-primary-brand: #6366f1;
+  --color-primary-hover: #4f46e5;
+}
+
+/* Custom utilities for v4 */
+@utility glass {
+  background-color: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+}
+
+@utility glass-dark {
+  background-color: rgba(15, 23, 42, 0.6);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(30, 41, 59, 0.3);
+}
+
+@layer base {
+  body {
+    @apply bg-slate-50 text-slate-900 transition-colors duration-300 min-h-screen antialiased;
+  }
+
+  .dark body {
+    @apply bg-slate-950 text-slate-100;
+  }
+}
+
+/* Using standard CSS for custom cards and buttons to avoid @apply conflicts in v4 */
+.glass-card {
+  @apply glass rounded-2xl p-6 transition-all duration-300;
+}
+
+.glass-card:hover {
+  @apply shadow-2xl;
+  transform: translateY(-4px);
+}
+
+.dark .glass-card {
+  @apply glass-dark;
+}
+
+.btn-primary {
+  @apply px-6 py-3 bg-indigo-500 text-white font-semibold rounded-xl transition-all duration-200 shadow-lg shadow-indigo-500/20 disabled:opacity-50;
+}
+
+.btn-primary:hover:not(:disabled) {
+  @apply bg-indigo-600;
+}
+
+.btn-primary:active:not(:disabled) {
+  transform: scale(0.95);
+}
+
+.btn-accent {
+  @apply px-6 py-3 bg-amber-500 text-white font-semibold rounded-xl transition-all duration-200 shadow-lg shadow-amber-500/20;
+}
+
+.btn-accent:hover {
+  filter: brightness(1.1);
+}
+
+.gradient-text {
+  @apply bg-clip-text text-transparent bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500;
+}
+
+.timeline-dot {
+  @apply w-4 h-4 rounded-full bg-indigo-500 relative z-10;
+}
+
+.timeline-line {
+  @apply absolute left-2 top-0 bottom-0 w-0.5 bg-slate-200 dark:bg-slate-800;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-slate-200 dark:bg-slate-800 rounded-full hover:bg-slate-300 dark:hover:bg-slate-700;
+}
+
+.chat-bubble {
+  @apply max-w-[80%] p-4 rounded-2xl mb-4;
+  animation: fadeIn 0.3s ease-out forwards;
+}
+
+.chat-bubble-user {
+  @apply glass ml-auto rounded-tr-none text-slate-900 dark:text-white;
+  border-color: rgba(99, 102, 241, 0.2);
+}
+
+.chat-bubble-ai {
+  @apply glass mr-auto rounded-tl-none bg-indigo-50/50 dark:bg-indigo-900/20 text-slate-900 dark:text-white;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.3s ease-out forwards;
+}
