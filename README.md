@@ -1,6 +1,6 @@
 # 🗳️ VoteSmart AI – Election Process Education Assistant
 
-VoteSmart AI is a modern, production-ready web application designed to educate citizens, especially first-time voters, about the election process in India. Powered by Google Gemini AI, it provides personalized guidance, interactive checklists, and real-time support.
+VoteSmart AI is a modern, production-ready web application designed to educate citizens, especially first-time voters, about the election process. Powered by Google Gemini AI, it provides personalized guidance, interactive checklists, and real-time support.
 
 ## 🎯 Features
 
@@ -10,13 +10,14 @@ VoteSmart AI is a modern, production-ready web application designed to educate c
 - **📚 Voter Guide**: Comprehensive lists of required documents and voting do's and don'ts.
 - **🏆 Voter IQ Quiz**: Fun and educational quiz to test your knowledge about the democratic process.
 - **🌓 Dark Mode**: Sleek, accessible UI with full dark mode support.
-- **📱 Fully Responsive**: Optimized for all devices (mobile, tablet, desktop).
+- **♿ Accessibility (A11y)**: Fully semantic HTML with ARIA roles for screen-reader compatibility.
+- **🛡️ High Security**: Powered by Express Rate Limit and Helmet to prevent DDoS and secure headers.
 
-## 🛠️ Tech Stack
+## 🏗️ Architecture
 
 - **Frontend**: React (Vite), Tailwind CSS, Framer Motion, Lucide icons.
-- **Backend**: Node.js, Express.
-- **AI Integration**: Google Generative AI (Gemini API).
+- **Backend**: Node.js, Express (Modular Architecture).
+- **AI Integration**: Google Generative AI (Gemini API) using Singleton Service Layer.
 - **Styling**: Premium custom CSS with glassmorphism and smooth animations.
 
 ## 📁 Project Structure
@@ -24,19 +25,27 @@ VoteSmart AI is a modern, production-ready web application designed to educate c
 ```text
 VoteSmart/
 ├── backend/
-│   ├── server.js         # API Endpoints
-│   ├── .env              # Secrets (API Keys)
+│   ├── src/
+│   │   ├── controllers/      # Route handlers (e.g., chat.controller.js)
+│   │   ├── services/         # Business logic & 3rd party APIs (e.g., gemini.service.js)
+│   │   ├── routes/           # Express routers (e.g., api.routes.js)
+│   │   ├── middlewares/      # Custom middleware (error, validation, auth)
+│   │   ├── utils/            # Helpers (e.g., logger.js)
+│   │   ├── data/             # Mock data
+│   │   └── app.js            # Express app configuration
+│   ├── server.js             # Entry point
+│   ├── .env                  
 │   └── package.json
 ├── frontend/
 │   ├── src/
-│   │   ├── components/   # Modular UI Components
-│   │   ├── App.jsx       # Main Entry
-│   │   └── index.css     # Global Styles
-│   └── tailwind.config.js
+│   │   ├── components/       # Modular UI components
+│   │   ├── App.jsx           # Main App file
+│   │   └── index.css         # Global Styles
+│   └── package.json
 └── README.md
 ```
 
-## 🚀 Getting Started
+## 🚀 Quick Start
 
 ### Prerequisites
 
@@ -53,14 +62,14 @@ VoteSmart/
    ```bash
    npm install
    ```
-3. Create a `.env` file from the example:
-   ```bash
-   cp .env.example .env
+3. Create a `.env` file and add your `GEMINI_API_KEY`:
+   ```env
+   GEMINI_API_KEY=your_api_key_here
+   PORT=5000
    ```
-4. Add your `GEMINI_API_KEY` to the `.env` file.
-5. Start the server:
+4. Start the server:
    ```bash
-   npm run dev
+   npm start
    ```
 
 ### Frontend Setup
@@ -78,27 +87,12 @@ VoteSmart/
    npm run dev
    ```
 
-## ☁️ Deployment
+## 🛡️ Security & Performance Enhancements
 
-### Backend (Google Cloud Run)
-
-1. Install Google Cloud SDK.
-2. Initialize project: `gcloud init`
-3. Deploy:
-   ```bash
-   gcloud run deploy votesmart-backend --source . --env-vars-file env.yaml --allow-unauthenticated
-   ```
-
-### Frontend (Vercel / Firebase)
-
-- **Vercel**: Connect your GitHub repository and it will auto-detect the Vite project.
-- **Firebase**: Run `firebase init` followed by `npm run build` and `firebase deploy`.
-
-## ✨ Future Enhancements
-
-- Multi-language support (Tamil, Hindi, etc.)
-- Voice input for the AI Assistant.
-- Direct integration with ECI APIs for real-time booth statistics.
+- **Helmet**: Secures HTTP headers.
+- **Rate-Limiter**: Limits API requests to prevent DDoS attacks.
+- **Singleton Model**: Gemini AI model loaded globally once in the Service layer to drastically improve time complexity and reduce initialization overhead.
+- **Global Error Handling**: Safely catches unhandled exceptions to prevent the server from crashing and leaking stack traces.
 
 ---
 Built with ❤️ for democracy.
