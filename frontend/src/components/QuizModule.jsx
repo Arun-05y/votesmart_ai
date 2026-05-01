@@ -17,7 +17,7 @@ export default function QuizModule() {
   const fetchQuestions = async () => {
     setLoading(true)
     try {
-      const res = await axios.get('http://localhost:5000/api/quiz')
+      const res = await axios.get('/api/quiz')
       setQuestions(res.data)
       setResult(null)
       setAnswers({})
@@ -48,7 +48,7 @@ export default function QuizModule() {
   const submitQuiz = async () => {
     setSubmitting(true)
     try {
-      const res = await axios.post('http://localhost:5000/api/quiz/submit', { answers })
+      const res = await axios.post('/api/quiz/submit', { answers })
       setResult(res.data)
     } catch (err) {
       console.error(err)

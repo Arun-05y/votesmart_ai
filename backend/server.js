@@ -1,6 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 const dotenv = require('dotenv');
+const path = require('path');
 const { GoogleGenerativeAI } = require('@google/generative-ai');
 
 dotenv.config();
@@ -145,6 +146,14 @@ app.post('/api/quiz/submit', (req, res) => {
     total: QUIZ_QUESTIONS.length,
     results
   });
+});
+
+// Serve frontend static files
+app.use(express.static(path.join(__dirname, '../frontend/dist')));
+
+// Catch-all route to serve the frontend's index.html
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, '../frontend/dist/index.html'));
 });
 
 app.listen(PORT, () => {

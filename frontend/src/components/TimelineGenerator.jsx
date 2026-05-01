@@ -11,7 +11,7 @@ export default function TimelineGenerator() {
   const fetchTimeline = async () => {
     setLoading(true)
     try {
-      const res = await axios.get(`http://localhost:5000/api/timeline?country=${location}&type=${type}`)
+      const res = await axios.get(`/api/timeline?country=${location}&type=${type}`)
       setTimeline(res.data)
     } catch (err) {
       console.error(err)
