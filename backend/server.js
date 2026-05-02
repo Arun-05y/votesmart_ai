@@ -1,16 +1,8 @@
+require('dotenv').config();
 const app = require('./src/app');
-const dotenv = require('dotenv');
 
-dotenv.config();
+const port = process.env.PORT || 8080;
 
-const PORT = process.env.PORT || 5000;
-
-// Export for Vercel
-module.exports = app;
-
-// Only listen when not in production (Vercel)
-if (process.env.NODE_ENV !== 'production') {
-  app.listen(PORT, () => {
-    console.log(`Server running on port ${PORT}`);
-  });
-}
+app.listen(port, "0.0.0.0", () => {
+  console.log(`Server running on port ${port}`);
+});
